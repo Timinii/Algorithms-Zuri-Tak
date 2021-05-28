@@ -13,38 +13,49 @@ const convertFahrToCelsius = (f) => {
 
 // CheckYuGiOh TASK
 
-const checkYuGiOh = (n) => {
-    const type = Object.prototype.toString.call(n).slice(1,-1).split(' ')[1];
-
-    
-    if ((type === "Number") || ((type === "String") && !isNaN(Number(n)))) {
-        
-        const newArray = Array.from(new Array(n), (x, i) => i + 1).map(replace);
-
-        
-        function replace(item) {
-            if ((item % 2 === 0) && (item % 3 === 0) && (item % 5 === 0)) {
-                return "yu-gi-oh";
-            } else if ((item % 2 === 0) && (item % 3 === 0)) {
-                return "yu-gi";
-            } else if ((item % 2 === 0) && (item % 5 === 0)) {
-                return "yu-oh";
-            } else if ((item % 3 === 0) && (item % 5 === 0)) {
-                return "gi-oh";
-            } else if (item % 2 === 0) {
-                return "yu";
-            } else if (item % 3 === 0) {
-                return "gi";
-            } else if (item % 5 === 0) {
-                return "oh";
-            } else {
-                return item;
-            }
-        };
-
-        return newArray;
-    } else {
-        return `invalid parameter: ${JSON.stringify(n).replace(/\"/g, "'")}`;
+const checkYuGiHo = (n)=>{
+        if (Array.isArray(n)) {
+        return `[${n}] Is not valid parameter but a/an array.`
     }
-    
+        if(typeof n === "object") {
+        let result = JSON.stringify(n)
+        return '${result}: is not a valid parameter but a/an ${typeof(n)}';
+    }
+
+        if(typeof n === "string" || typeof n === "boolean" || typeof n === 'undefined' || typeof n === "object" ||
+        typeof n === "function") {
+        var topping = JSON.stringify(n)
+        return `invalid parameter: ${topping} is a/an ${typeof(n)}`; 
+
+    }else {
+    let arr = [];
+    for (let i = 1; i <= n; i++) {
+        if (i % 2 ===0 && i%3===0 && i % 5 === 0) {
+        arr.push('yu-gi-ho')
+        } else if (i%2 ===0 && i% 3===0) {
+          arr.push('yu-gi')
+        } else if (i % 3===0 && i % 5 === 0) {
+        arr.push('yu-ho');
+        } else if (i%2===0 && i%3===0) {
+        arr.push('gi-ho')
+        } else if (i%2===0 && i%5===0) {
+        arr.push('yu-gi')
+        } else if (i%3===0 && i%5===0) {
+          arr.push('yu-ho')
+        } else if (i%2===0 ) {
+        arr.push('yu')
+        } else if (i % 3 === 0) {
+        arr.push('gi')
+        } else if(i % 5===0) {
+        arr.push('ho');
+        } else {
+        arr.push(i)
+      }
+    }
+    return arr;
+  
+  }
 }
+  console.log(checkYuGiHo(30))
+  console.log(checkYuGiHo(10))
+  console.log(checkYuGiHo("fizzbuzz is meh"))
